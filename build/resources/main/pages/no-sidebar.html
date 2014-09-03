@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+<!--
+	Strongly Typed by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>No Sidebar - Strongly Typed by HTML5 UP</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="../resources/css/ie/html5shiv.js"></script><![endif]-->
+		<script src="../resources/js/jquery.min.js"></script>
+		<script src="../resources/js/jquery.dropotron.min.js"></script>
+		<script src="../resources/js/skel.min.js"></script>
+		<script src="../resources/js/skel-layers.min.js"></script>
+		<script src="../resources/js/init.js"></script>
+			<link rel="stylesheet" href="../resources/css/skel.css" />
+			<link rel="stylesheet" href="../resources/css/style.css" />
+			<link rel="stylesheet" href="../resources/css/style-desktop.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="../resources/css/ie/v8.css" /><![endif]-->
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+    </head>
+	<body class="no-sidebar">
+
+		<!-- Header -->
+			<div id="header-wrapper">
+				<div id="header" class="container">
+					
+					<!-- Logo -->
+						<h1 id="logo"><a href="index.html">We Have Science</a></h1>
+						<p>Um blog sobre Java e computação. ;)</p>
+					
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a class="icon fa-home" href="index.html"><span>Introduction</span></a></li>
+								<li>
+									<a href="" class="icon fa-bar-chart-o"><span>Dropdown</span></a>
+									<ul>
+										<li><a href="#">Lorem ipsum dolor</a></li>
+										<li><a href="#">Magna phasellus</a></li>
+										<li><a href="#">Etiam dolore nisl</a></li>
+										<li>
+											<a href="">Phasellus consequat</a>
+											<ul>
+												<li><a href="#">Magna phasellus</a></li>
+												<li><a href="#">Etiam dolore nisl</a></li>
+												<li><a href="#">Phasellus consequat</a></li>
+											</ul>
+										</li>
+										<li><a href="#">Veroeros feugiat</a></li>
+									</ul>
+								</li>
+								<li><a class="icon fa-cog" href="left-sidebar.html"><span>Left Sidebar</span></a></li>
+								<li><a class="icon fa-retweet" href="right-sidebar.html"><span>Right Sidebar</span></a></li>
+								<li><a class="icon fa-sitemap" href="no-sidebar.html"><span>No Sidebar</span></a></li>
+							</ul>
+						</nav>
+
+				</div>
+			</div>
+			
+		<!-- Main -->
+			<div id="main-wrapper">
+				<div id="main" class="container small">
+					<div id="content">
+
+						<!-- Post -->
+							<article class="box post">
+								<header>
+									<h2>Uma visão geral do CDI: Por que e como usar?</h2>
+								</header>
+                                <p>Pra quem n&atilde;o sabe, CDI (Contexts and Dependency Injection) &eacute; a especifica&ccedil;&atilde;o do JEE 6 para inje&ccedil;&atilde;o de depend&ecirc;ncias e &eacute; uma &oacute;tima ferramenta de se trabalhar. Em alguns posts eu utilizei CDI mas nunca realmente criei um artigo focado exclusivamente para CDI, ent&atilde;o l&aacute; vai!
+                                    Uma das coisas mais interessantes de CDI &eacute; que ela &eacute; uma tecnologia capaz de integrar muito bem com outras tecnologias, como por exemplo JSF, JPA, EJBs, etc. Com a chegada do CDI 1.1 (JEE 7) ainda &eacute; poss&iacute;vel integrar com outras coisas que n&atilde;o entrarei no m&eacute;rito por enquanto.
+                                </p><p>Nesse artigo eu falarei muito pouco mesmo em rela&ccedil;&atilde;o ao CDI, apenas citarei coisas &uacute;teis que talvez possa fazer falta no seu dia a dia de trabalho e que o CDI prop&otilde;e.
+                                </p><p>&lt;!--more--&gt;
+                                </p><p><strong>Mas o que &eacute; essa tal de inje&ccedil;&atilde;o de depend&ecirc;ncias?
+                                    </strong>
+                                </p><p>Ent&atilde;o, &eacute; um assunto que me fez pensar muito quando comecei a usar, me fez perguntas coisas tipo: Por que usar? O que eu ganho com isso? Qual a vantagem que um sistema que usa inje&ccedil;&atilde;o de depend&ecirc;ncias contra um sistema que n&atilde;o usa?
+                                </p><p>Pois bem, vou explicar de uma maneira que faria eu ser esclarecido na &eacute;poca, espero que esclare&ccedil;a a d&uacute;vida de quem se pergunta a mesma coisa.
+                                </p><p>Voc&ecirc; sabe o que &eacute; um design pattern, certo? Inje&ccedil;&atilde;o de depend&ecirc;ncias &eacute; um deles, no qual diz que a sua classe n&atilde;o deve se preocupar em como obter as suas depend&ecirc;ncias e sim em fazer apenas no que ela diz respeito. Isso torna seu c&oacute;digo mais limpo e coeso, por exemplo:
+                                </p>
+                                Digamos que vamos criar um DAO, j&aacute; que estamos usando JPA, precisamos ter o nosso EntityManager:<br/>
+                                <code class="prettyprint"> <strong> <br/>
+                                    private EntityManager em;<br/>
+                                    private EntityManagerFactory emFactory;<br/><br/>
+                                private void createEntityManager() throws Exception{<br/>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;emFactory = Persistence.createEntityManagerFactory("MyPU");<br/>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;em = emFactory.createEntityManager();<br/>
+                                }</strong>
+                                </code>
+                                <br/><br/>
+
+                                <p>Nosso DAO, al&eacute;m de se preocupar em manipular dados com a database, ele tamb&eacute;m precisa se preocupar em como obter o EntityManager, que tamb&eacute;m faz com que ele precise utilizar o EntityManagerFactory para criar cri&aacute;-lo, sendo assim, ele tamb&eacute;m precisaria utilizar a classe Persistence para criar o EntityManagerFactory, n&atilde;o esquecendo tamb&eacute;m que ele tamb&eacute;m precisaria conhecer o nome do Persistent Unit.
+                                    Analisando bem, esse DAO se preocupa MUITA com coisa! Basicamente, estamos criando uma conex&atilde;o com o banco de dados dentro do DAO. Isso n&atilde;o faz muito sentido, certo?
+                                </p>
+
+                                Caso adotemos inje&ccedil;&atilde;o de depend&ecirc;ncias na aplica&ccedil;&atilde;o, mais especificamente nesse DAO, a sa&iacute;da mais simples e inteligente a se fazer seria:<br/>
+                                <code class="prettyprint"> <strong><br/>
+                                    private EntityManager em;<br/>
+                                    public DAO(EntityManager em){<br/>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;this.em = em;<br/>
+                                    }<p/></strong>
+                                    </code>
+                                <p>Pronto, dessa forma o nosso DAO apenas deve se preocupar em fazer fun&ccedil;&otilde;es relacionadas &agrave; classe e nada mais.
+                                </p><p>Mas a&iacute; voc&ecirc; est&aacute; se perguntando: tudo bem, mas, quem for passar o Entity Manager para o DAO tamb&eacute;m vai ter que fazer o trabalho que "supostamente" era para o DAO ter feito.
+                                    Bem, a resposta &eacute; curta e grossa: Sim! Algu&eacute;m uma hora ter&aacute; que cuidar de todas as depend&ecirc;ncias, mas, voc&ecirc; pode criar uma classe que fa&ccedil;a exatamente isso, que cuide de todas as depend&ecirc;ncias de todas as classes.
+                                </p><p>Resolvendo esse problema, existe a Invers&atilde;o de Controle (IoC).
+                                    Resumidamente, falamos que um container/framework possui IoC quando ele tem a capacidade de trabalhar com a aplica&ccedil;&atilde;o que utiliza o container/framework em quest&atilde;o, n&atilde;o precisando o programador utiliz&aacute;-lo explicitamente. Containers e frameworks IoC s&atilde;o mais comuns do que parece. Qualquer framework que faz alguma coisa com uma classe que <strong>voc&ecirc; criou</strong> sem voc&ecirc; delegar programaticamente, implementa isso que chamamos de invers&atilde;o de controle.
+                                </p><p>Obs.: Eu reparei que as pessoas costumam confundir muito o conceito de invers&atilde;o de controle e inje&ccedil;&atilde;o de dependencias. Muitas acham que ambos tem o mesmo significado e esse &eacute; um pensamento errado. Como eu sei que voc&amp;#7869; pode n&atilde;o ter entendido a minha explica&ccedil;&atilde;o, aconselho dar uma olhada nesse <a target="_blank" href="http://martinfowler.com/articles/injection.html">artigo do Martin Fowler sobre IoC e DI</a>
+                                </p><p>Ent&atilde;o, com a invers&atilde;o de controle, os containers tiram o controle da sua m&atilde;o e passam o controle para eles mesmos. Sim, quanta criatividade nesse nome. Ali&aacute;s, um pouco controverso, pois, na maioria das vezes, s&atilde;o bastante configur&aacute;veis pelo programador. Voc&ecirc; consegue delegar a eles o que eles precisam fazer, e eles futuramente v&atilde;o fazer, sem voc&ecirc; precisar intervir.
+                                </p><p>Continuando com esse pensamento, voc&ecirc; logo imagina que <strong>IoC + DI = injetador de depend&ecirc;ncias automatizado</strong>, ou seja, o pr&oacute;prio container injetaria as inst&acirc;ncias para voc&ecirc;. Felizmente, voc&ecirc; est&aacute; completamente certo, parab&eacute;ns!
+                                </p><p>Vamos olhar a anota&ccedil;&atilde;o @PersistenceContext da api JPA:
+                                </p><p><code class="prettyprint"> <br/>
+                                    @PersistenceContext<br/>
+                                    private EntityManager em;<br/>
+                                    </code>
+                                </p><p>Nesse trecho de c&oacute;digo, estamos dizendo que estamos injetando uma inst&acirc;ncia de um EntityManager dentro no nosso atributo. Parece m&aacute;gica, certo?
+                                </p><p>Vamos agora ter uma vis&atilde;o do nosso DAO por completo:
+                                </p><p><code class="prettyprint"> <br/>
+                                    public class DAO {
+                                </p><pre>
+     @PersistenceContext
+     private EntityManager em;
+     //crud methods
+</pre>
+                                <p>}<br/>
+                                    </code>
+                                </p><p>Simples, certo? Ao inv&eacute;s daquela bananada de c&oacute;digo toda apenas para obter um EntityManager, s&oacute; com uma anota&ccedil;&atilde;o todo aquele trabalho &eacute; economizado, al&eacute;m de diminuir o acoplamento da nossa classe e aumentar a sua coes&atilde;o!
+                                </p><p>Come&ccedil;ando agora com o CDI, criaremos uma classe que utilizaria o DAO.
+                                </p><p>Por exemplo, vamos criar uma classe Service. Sabendo que toda a classe &eacute; eleg&iacute;vel para inje&ccedil;&atilde;o, fariamos algo como:
+                                </p><p><code class="prettyprint"> <br/>
+                                    public class Service {
+                                </p><pre>
+     @Inject
+     private DAO dao;</pre>
+
+<pre>
+     public void save(Entity e){
+         e.validate();
+         dao.save(e);
+     }
+     //methods
+</pre>
+                                <p>}<br/>
+                                    </code>
+                                </p><p>Uma anota&ccedil;&atilde;o nova: @Inject, &eacute; a anota&ccedil;&atilde;o mais famosa do CDI, uma das que voc&amp;#7877; ir&aacute; mais usar, ela &eacute; a chave da inje&ccedil;&atilde;o de depend&ecirc;ncia dessa ferramenta t&atilde;o interessante.
+                                </p><p>Voc&ecirc; pode utilizar a anota&ccedil;&atilde;o n&atilde;o s&oacute; no atributo, mas tamb&eacute;m em um m&eacute;todo ou no construtor:
+                                </p><p><code class="prettyprint"> <br/>
+                                    public class Service {
+                                </p><p>     private DAO dao;
+                                </p><pre>
+     @Inject
+     public Service(DAO dao){
+         this.dao = dao;
+     }
+     public void save(Entity e){
+         e.validate();
+         dao.save(e);
+     }
+     //methods
+</pre>
+                                <p>}<br/>
+                                    </code>
+                                </p>
+                                <p><code class="prettyprint"> <br/>
+                                    public class Service {
+                                </p><p>     private DAO dao;
+                                </p><pre>
+     public void save(Entity e){
+         e.validate();
+         dao.save(e);
+     }
+     @Inject
+     public void setDao(DAO dao){
+         this.dao = dao;
+     }
+     //methods
+</pre>
+                                <p>}<br/>
+                                    </code>
+                                </p><p>Al&eacute;m de voc&ecirc; poder fazer com que uma classe sua seja um bean eleg&iacute;vel para inje&ccedil;&atilde;o, voc&ecirc; tamb&eacute;m pode fazer com que outras classes que voc&ecirc; n&atilde;o criou tamb&eacute;m sejam eleg&iacute;veis para inje&ccedil;&atilde;o.
+                                    Vamos usar como exemplo uma classe bastante usada:
+                                </p><p><code class="prettyprint"> <br/>
+                                    private Logger logger = LoggerFactory.getLogger(MyClass.class);
+                                    </code>
+                                </p><p>N&atilde;o v&ecirc; outra maneira de conseguir uma inst&acirc;ncia dessa classe? Veja bem:
+                                </p><p><code class="prettyprint"> <br/>
+                                    private Logger logger;
+                                </p><p>@Produces<br/>
+                                    public Logger loggerProducer(){
+                                </p><p>    return LoggerFactory.getLogger(MyClass.class);
+                                    }<br/>
+                                    </code>
+                                </p><p>Dessa forma, sempre que voc&ecirc; for usar a classe Logger:
+                                </p><p><code class="prettyprint"> <br/>
+                                    @Inject<br/>
+                                    private Logger logger;<br/>
+                                    </code>
+                                </p><p>O que &eacute; retornado no m&eacute;todo loggerProducer() &eacute; passado para qualquer atributo Logger que possua a anota&ccedil;&atilde;o @Inject.
+                                </p><p>Aprendemos mais uma maneira de criar um bean eleg&iacute;vel para inje&ccedil;&atilde;o, mas, e se eu tivesse dois beans eleg&iacute;veis para o mesmo tipo? Por exemplo:
+                                </p><p>Imaginem que tenhamos uma interface chamada DAO:
+                                </p><p><code class="prettyprint"> <br/>
+                                    public interface DAO {
+                                </p><p>     //crud methods<br/>
+                                    }<br/>
+                                    </code>
+                                </p><p>E duas classes que a implementam, a PersonDAO:
+                                </p><p><code class="prettyprint"> <br/>
+                                    public class PersonDAO implements DAO {
+                                </p><p>     //crud methods<br/>
+                                    }<br/>
+                                    </code>
+                                </p><p>E a classe ProductDAO:
+                                </p><p><code class="prettyprint"> <br/>
+                                    public class ProductDAO implements DAO {
+                                </p><p>     //crud methods<br/>
+                                    }<br/>
+                                    </code>
+                                </p><p>Quando voc&ecirc; for fazer isso:
+                                </p><p><code class="prettyprint"> <br/>
+                                    @Inject<br/>
+                                    private DAO dao;<br/>
+                                    </code>
+                                </p><p>O container vai lhe perguntar qual das duas inst&acirc;ncias da classe DAO &eacute; para ele instanciar: PersonDAO ou ProductDAO.
+                                </p><p>Uma sa&iacute;da &eacute; criar um qualifier. Como o pr&oacute;prio nome j&aacute; diz, um qualificador, &eacute; nada mais que uma anota&ccedil;&atilde;o, basicamente funciona como uma identidade para um bean:
+                                </p><p><code class="prettyprint"> <br/>
+                                    @Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
+                                    @Qualifier<br/>
+                                    @Retention(RetentionPolicy.RUNTIME)<br/>
+                                    public @interface PersonDAOQualifier {<br/>
+                                    }<br/>
+                                    </code>
+                                </p><p>Mais um...
+                                </p><p><code class="prettyprint"> <br/>
+                                    @Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
+                                    @Qualifier<br/>
+                                    @Retention(RetentionPolicy.RUNTIME)<br/>
+                                    public @interface ProductDAOQualifier {
+                                    }<br/>
+                                    </code>
+                                </p><p>Dessa forma, faremos assim:
+                                </p><p><code class="prettyprint"> <br/>
+                                    @PersonDAOQualifier<br/>
+                                    public class PersonDAO implements DAO {
+                                </p><p>     //crud methods<br/>
+                                    }<br/>
+                                    </code>
+                                </p><p>E a classe ProductDAO:
+                                </p><p><code class="prettyprint"> <br/>
+                                    @ProductDAOQualifier<br/>
+                                    public class ProductDAO implements DAO {
+                                </p><p>     //crud methods<br/>
+                                    }<br/>
+                                    </code>
+                                </p><p>E quando voc&ecirc; for usar a classe DAO:
+                                </p><p><code class="prettyprint"> <br/>
+                                    @Inject<br/>
+                                    @PersonDAOQualifier<br/>
+                                    private DAO dao;<br/>
+                                    </code>
+                                </p><p>Assim ele vai saber qual a inst&acirc;ncia certa injetar no seu atributo.
+                                </p><p>Outra coisa bacana no CDI &eacute; o uso de Interceptors:
+                                </p><p>Como o pr&oacute;prio nome j&aacute; diz, um interceptador &eacute; executado antes e depois de um determinado m&eacute;todo para fazer alguma a&ccedil;&atilde;o que voc&ecirc; determinar.
+                                    Por exemplo, vamos criar um interceptor que loga o que vem e o que sa&iacute; de um m&eacute;todo:
+                                </p><p><code class="prettyprint"> <br/>
+                                    public class LoggerInterceptor{
+                                </p><pre>
+        @Inject
+        private Logger logger;
+        @AroundInvoke
+        public Object loggerInterceptor(InvocationContext ctx) throws Exception{
+             logger.info("Method: " + ctx.getMethod());
+             Object result = ctx.proceed();
+             logger.info("Returned: " + result);
+        }
+</pre>
+                                <p>}<br/>
+                                    </code>
+                                </p><p>Note que colocamos a anota&ccedil;&atilde;o @AroundInvoke: ela diz que esse ser&aacute; o m&eacute;todo executado ao interceptar o m&eacute;todo alvo.
+                                    O m&eacute;todo alvo &eacute; executado quando voc&ecirc; chama o m&eacute;todo ctx.proceed(); e o retorno do m&eacute;todo alvo &eacute; retornado nesse mesmo m&eacute;todo proceed.
+                                </p><p>Vamos voltar para o nosso Service, digamos que queremos que ele seja interceptado:
+                                </p><p><code class="prettyprint"> <br/>
+                                    @Interceptors({LoggerInterceptor.class})
+                                    public class Service {
+                                </p><pre>
+     @Inject
+     private DAO dao;
+     //methods
+</pre>
+                                <p>}<br/>
+                                    </code>
+                                </p><p>Dessa forma, todo m&eacute;todo que voc&ecirc; usar da classe Service, ser&aacute; interceptada pelo interceptor criado acima.
+                                </p><p>N&atilde;o esquecendo da integra&ccedil;&atilde;o do CDI com JSF, para que sua classe esteja acess&iacute;vel via p&aacute;ginas JSF, &eacute; necess&aacute;rio a utiliza&ccedil;&atilde;o da anota&ccedil;&atilde;o @Named nela:
+                                </p><p><code class="prettyprint"> <br/>
+                                    @Named<br/>
+                                    @RequestScoped<br/>
+                                    public class ManagedBean implements Serializable{
+                                </p><pre>
+     @Inject
+     private Service service;
+     //methods
+</pre>
+                                <p>} <br/>
+                                    </code>
+                                </p><p>Dessa forma, voc&ecirc; poder&aacute; usar essa classe da mesma forma de como usaria se estivesse usando um @ManagedBean, via expression language:
+                                </p><p>[sourcecode language="html"]<br/>
+                                    &lt;h:commandButton action="#{managedBean.someAction}" value="Some Action"/&gt;
+                                    </code>
+                                </p><p><strong>Um ponto negativo</strong> &eacute; que as anota&ccedil;&otilde;es do CDI <strong>n&atilde;o s&atilde;o compat&iacute;veis</strong> com as do JSF, por exemplo: voc&ecirc; n&atilde;o vai conseguir utilizar o @Inject caso esteja em uma classe que utiliza a anota&ccedil;&atilde;o @ManagedBean, simplesmente n&atilde;o ir&aacute; funcionar.
+                                    De qualquer forma, utilizando as anota&ccedil;&otilde;es do CDI voc&ecirc; vai conseguir obter as mesmas funcionalidades. O principal problema &eacute; a confus&atilde;o que podemos fazer misturando anota&ccedil;&otilde;es das duas apis. Uma confus&atilde;o bastante comum &eacute; trocar as anota&ccedil;&otilde;es de scopos, sendo que de ambas as apis possuem o mesmo nome isso realmente acaba confundindo, mas, esclarecendo, <strong>utilize apenas as anota&ccedil;&otilde;es do pacote javax.enterprise.context</strong> para os escopos.
+                                </p>
+                                <p><strong>Outras informa&ccedil;&otilde;es:<br/>
+                                    </strong><br/>
+                                    N&atilde;o falei mas, todo bean da CDI tem um escopo. O padr&atilde;o &eacute; o @Dependent que faz com que nosso bean seja instanciado a mesma quantidade de vezes de quem estiver injetando for.
+                                    <strong>Outros escopos dispon&iacute;veis s&atilde;o: @RequestScoped, @SessionScoped, @ApplicationScoped que n&atilde;o vou explicar aqui e agora como funcionam.
+                                    </strong><br/>
+                                    CDI funcionam tamb&eacute;m muito bem em servlet containers, como por exemplo com o Tomcat ou o Jetty, existem v&aacute;rios exemplos na internet explicando como integr&aacute;-los.
+                                </p><p>Lembrando que CDI &eacute; apenas uma especifica&ccedil;&atilde;o, ou seja, voc&ecirc; ir&aacute; precisar da implementa&ccedil;&atilde;o. A JBoss possui uma implementa&ccedil;&atilde;o da CDI com alguns poucos recursos espec&iacute;ficos a mais, chamada JBoss Weld, sendo a implementa&ccedil;&atilde;o hoje da CDI mais famosa. Usando servidores JEE 6/7 voc&ecirc; n&atilde;o precisar&aacute; se preocupar com implementa&ccedil;&otilde;es, &eacute; s&oacute; voc&ecirc; colocar o jar da JEE e simplesmente tudo ir&aacute; funcionar.
+                                </p><p>Para seu projeto CDI funcionar, &eacute; necess&aacute;rio adicionar um arquivo beans.xml, mesmo que vazio dentro da pasta WEB-INF do seu projeto, caso seu projeto seja Web ou dentro da pasta /src/META-INF caso seu projeto n&atilde;o seja Web, como por exemplo um projeto EJB.
+                                </p><p>Basicamente &eacute; isso, espero que tenha esclarecido algumas d&uacute;vidas e que esse tenha sido um tutorial &uacute;til para voc&ecirc;, lembrando que para um esclarecimento maior, nada melhor do que olhar na especifica&ccedil;&atilde;o do CDI no site da Oracle.
+                                </p><p><strong>Alguns links interessantes:<br/>
+                                    </strong><br/>
+                                    &lt;a href="<a href="http://docs.oracle.com/javaee/6/tutorial/doc/giwhl.html">http://docs.oracle.com/javaee/6/tutorial/doc/giwhl.html</a>" target="_blank"&gt;The Java EE 6 Tutorial: Overview of CDI&lt;/a&gt;
+                                </p><p>&lt;a href="<a href="http://www.oracle.com/technetwork/articles/java/cdi-javaee-bien-225152.html">http://www.oracle.com/technetwork/articles/java/cdi-javaee-bien-225152.html</a>" target="_blank"&gt;Contexts and Dependency Injection in Java EE 6&lt;/a&gt;
+                                </p><p>&lt;a href="<a href="http://www.oracle.com/technetwork/articles/java/ejb-3-1-175064.html">http://www.oracle.com/technetwork/articles/java/ejb-3-1-175064.html</a>" target="_blank"&gt;Enterprise JavaBeans 3.1 with Contexts and Dependency Injection: The Perfect Synergy&lt;/a&gt;
+                                </p>
+                                <p>Abra&ccedil;os e bons estudos!
+                                </p>
+							</article>
+					
+					</div>
+				</div>
+			</div>
+
+		<!-- Footer -->
+			<div id="footer-wrapper">
+				<div id="footer" class="container">
+					<header>
+						<h2>Questions or comments? <strong>Get in touch:</strong></h2>
+					</header>
+					<div class="row">
+						<div class="6u">
+							<section>
+								<form method="post" action="#">
+									<div class="row half">
+										<div class="6u">
+											<input name="name" placeholder="Name" type="text" />
+										</div>
+										<div class="6u">
+											<input name="email" placeholder="Email" type="text" />
+										</div>
+									</div>
+									<div class="row half">
+										<div class="12u">
+											<textarea name="message" placeholder="Message"></textarea>
+										</div>
+									</div>
+									<div class="row half">
+										<div class="12u">
+											<a href="#" class="form-button-submit button icon fa-envelope">Send Message</a>
+										</div>
+									</div>
+								</form>
+							</section>
+						</div>
+						<div class="6u">
+							<section>
+								<p>Erat lorem ipsum veroeros consequat magna tempus lorem ipsum consequat Phaselamet 
+								mollis tortor congue. Sed quis mauris sit amet magna accumsan tristique. Curabitur 
+								leo nibh, rutrum eu malesuada.</p>
+								<div class="row">
+									<ul class="icons 6u">
+										<li class="icon fa-home">
+											1234 Somewhere Road<br />
+											Nashville, TN 00000<br />
+											USA
+										</li>
+										<li class="icon fa-phone">
+											(000) 000-0000
+										</li>
+										<li class="icon fa-envelope">
+											<a href="#">info@untitled.tld</a>
+										</li>
+									</ul>
+									<ul class="icons 6u">
+										<li class="icon fa-twitter">
+											<a href="#">@untitled-tld</a>
+										</li>
+										<li class="icon fa-instagram">
+											<a href="#">instagram.com/untitled-tld</a>
+										</li>
+										<li class="icon fa-dribbble">
+											<a href="#">dribbble.com/untitled-tld</a>
+										</li>
+										<li class="icon fa-facebook">
+											<a href="#">facebook.com/untitled-tld</a>
+										</li>
+									</ul>
+								</div>
+							</section>
+						</div>
+					</div>
+				</div>
+				<div id="copyright" class="container">
+					<ul class="links">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+                <script>
+            var editor = CodeMirror.fromTextArea('code', {
+              height: "150px",
+              path: "../resources/css/codemirror.js",
+              textWrapping: true
+            });
+        </script>
+			</div>
+
+	</body>
+</html>
